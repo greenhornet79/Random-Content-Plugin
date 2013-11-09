@@ -14,7 +14,7 @@ class Endo_Wrc_Post_Type {
 
 		$this->register_post_type();
 		$this->register_taxonomy();
-
+		add_shortcode( 'random', array( &$this, 'shortcode') );
 	}
 	
 	public function register_post_type() {
@@ -52,6 +52,54 @@ class Endo_Wrc_Post_Type {
 				'hierarchical' => true
 			)
 		);
+	}
+
+	public function shortcode( $atts ) {
+		extract( shortcode_atts( array(
+			'group_id' => ''
+			), $atts ));
+
+		// if $group_id is set, then filter results by $group_id
+		if ( $group_id ) {
+			$my_query = new WP_Query( array( 
+				'post_type' => 'endo_wrc_cpt', 
+				'posts_per_page' => 1, 
+				'orderby' => 'rand', 
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'endo_wrc_group',
+						'field' => 'id',
+						'terms' => $group_id
+					)
+				)
+			) );
+
+		}
+		else {
+			// filter through all entries
+			$my_query = new WP_Query( array( 
+				'post_type' => 'endo_wrc_cpt', 
+				'posts_per_page' => 1, 
+				'orderby' => 'rand'
+			) );
+		}
+
+		if ( $my_query->have_posts() ) {
+
+			while ( $my_query->have_posts() ) : $my_query->the_post();
+				
+				$content = apply_filters('the_content', get_the_content() );
+					
+			endwhile;
+
+		} else {
+			$content = 'No posts found.';
+		}
+
+		wp_reset_postdata();
+
+		return $content;
+		
 	}
 
 
