@@ -5,7 +5,7 @@ Plugin URI: http://www.endocreative.com
 Description: Randomly display content from a custom post type using a widget
 Author: Endo Creative
 Author URI: http://www.endocreative.com
-Version: 0.2
+Version: 0.3
 */
 
 class Endo_Wrc_Post_Type {
