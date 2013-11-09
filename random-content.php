@@ -163,13 +163,13 @@ class Endo_WRC_Widget extends WP_Widget {
 			) );
 		}
 
-		
-
 		while ( $my_query->have_posts() ) : $my_query->the_post();
 			
 			the_content();
 				
 		endwhile;
+
+		wp_reset_postdata();
 						
 		echo $after_widget;
 
