@@ -198,13 +198,11 @@ class Endo_WRC_Widget extends WP_Widget {
 		
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title: </label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
-				name="<?php echo $this->get_field_name( 'title' ); ?>"
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>"
 				value="<?php echo $title; ?>" />
 		</p>
 		
-		<p>
-			<label for="<?php echo $this->get_field_id( 'group' ); ?>">Group: </label>
+		
 			
 		<?php
 	
@@ -219,20 +217,24 @@ class Endo_WRC_Widget extends WP_Widget {
 
 			$count = count($terms);
 			if ( $count > 0 ){
+
+				echo '<p>';
+				echo '<label for="' . $this->get_field_id( 'group' ) . '">Group: </label>';
 				echo '<select class="widefat" name="' . $field_name . '" id="' . $field_id . '">';
 				foreach ( $terms as $term ) {
 					echo "<option value='$term' " . selected( $group, $term ) . ">" . $term . "</option>";
 				}
 				echo "</select>";
+				echo '</p>';
 			} 
 			else {
-				echo "<p>Create a group to organize multiple widgets.</p>";
+				echo '<p>Create a group to organize multiple widgets.</p>';
 			}
 
 		?>
 			
 		
-		</p>
+		
 		
 		
 		
