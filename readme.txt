@@ -3,8 +3,8 @@ Contributors: endocreative
 Donate link: http://endocreative.com
 Tags: content, widget, random, shortcode, text, images
 Requires at least: 3.0.1
-Tested up to: 3.7.1
-Stable tag: 6.0
+Tested up to: 3.9.1
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,11 +39,18 @@ Place the shortcode `[random]` anywhere on a post or page. To choose entries fro
 
 Yes. Create a group, and assign specific entries to the group. It works just like categories. 
 
+= How do I find the group id? =
+
+Click on Random Content->Group. Click on the group name and look for the tag_ID parameter in the address bar's URL.
+
 == Screenshots ==
 
 1. Adding the widget to a sidebar.
 
 == Changelog ==
+
+= 0.4 =
+* Update input text syntax in widget
 
 = 0.3 =
 * Add shortcode functionality.
@@ -51,8 +58,3 @@ Yes. Create a group, and assign specific entries to the group. It works just lik
 
 = 0.1 =
 * First released into the wild.
-
-== Upgrade Notice ==
-
-= 0.3 =
-This version adds a shortcode so you can insert random content into any post or page.
