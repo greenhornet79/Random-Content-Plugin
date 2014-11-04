@@ -51,6 +51,10 @@ class Endo_Random_Content {
 
 		add_action( 'widgets_init' , array( $this, 'register_endo_wrc_widget' ) );
 
+		add_filter( 'manage_endo_wrc_cpt_posts_columns', array( $this, 'add_random_content_columns' ) );
+
+		add_action( 'manage_endo_wrc_cpt_posts_custom_column', array( $this, 'random_content_custom_columns' ), 10, 2 );
+
 	}
 
 	/**
@@ -112,6 +116,48 @@ class Endo_Random_Content {
 				'hierarchical' => true
 			)
 		);
+	}
+
+
+	/**
+	* Add extra columns to the random content custom post type
+	*
+	* @since 1.0
+	*/
+	public function add_random_content_columns( $columns ) {
+
+		return array_merge( $columns, array( 'group' => 'Group' ) );
+	}
+
+	/**
+	* Add extra columns to the random content custom post type
+	*
+	* @since 1.0
+	*/
+	public function random_content_custom_columns( $column, $post_id ) {
+
+		switch( $column ) {
+
+			case 'group' :
+
+			$terms = get_the_terms( $post_id, 'endo_wrc_group' );
+			
+			if ( $terms && ! is_wp_error( $terms ) ) {
+
+				$groups = array();
+
+				foreach ( $terms as $term ) {
+					$groups[] = $term->name;
+				}
+
+				$all_groups = join( ", ", $groups );
+			}
+
+			echo $all_groups;
+			
+			break;
+		}
+
 	}
 
 	/**
