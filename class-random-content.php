@@ -41,8 +41,13 @@ class Endo_Random_Content {
 	public function run() {
 
 		add_action( 'init', array( $this, 'register_post_type' ) );
+
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
+
+		// this shortcode name (random) has been deprecated due to conflicts with other plugins
 		add_shortcode( 'random', array( &$this, 'shortcode') );
+
+		add_shortcode( 'random_content', array( &$this, 'new_shortcode') );
 
 		add_action( 'widgets_init' , array( $this, 'register_endo_wrc_widget' ) );
 
@@ -113,42 +118,104 @@ class Endo_Random_Content {
 	* Defines random content shortcode
 	*
 	* @since 0.3.0
+	* @deprecated 1.0.0
 	*/
 	public function shortcode( $atts ) {
-		extract( shortcode_atts( array(
-			'group_id' => ''
-			), $atts ));
+		$a = shortcode_atts( array(
+			'group_id' => '',
+			'num_posts' => 1,
+		), $atts );
 
 		// if $group_id is set, then filter results by $group_id
-		if ( $group_id ) {
+		if ( !empty( $a['group_id'] ) ) {
+
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => 1, 
+				'posts_per_page' => 2, 
 				'orderby' => 'rand', 
 				'tax_query' => array(
 					array(
 						'taxonomy' => 'endo_wrc_group',
 						'field' => 'id',
-						'terms' => $group_id
+						'terms' => $a['group_id']
 					)
 				)
 			) );
 
-		}
-		else {
+		} else {
+
 			// filter through all entries
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => 1, 
+				'posts_per_page' => 2, 
 				'orderby' => 'rand'
 			) );
 		}
 
 		if ( $my_query->have_posts() ) {
 
+			$content = "";
+
 			while ( $my_query->have_posts() ) : $my_query->the_post();
 				
-				$content = apply_filters('the_content', get_the_content() );
+				$content .= apply_filters('the_content', get_the_content() );
+					
+			endwhile;
+
+		} else {
+			$content = 'No posts found.';
+		}
+
+		wp_reset_postdata();
+
+		return $content;
+		
+	}
+
+	/**
+	* Defines new random content shortcode
+	*
+	* @since 0.3.0
+	*/
+	public function new_shortcode( $atts ) {
+		$a = shortcode_atts( array(
+			'group_id' => '',
+			'num_posts' => 1,
+		), $atts );
+
+		// if $group_id is set, then filter results by $group_id
+		if ( !empty( $a['group_id'] ) ) {
+
+			$my_query = new WP_Query( array( 
+				'post_type' => 'endo_wrc_cpt', 
+				'posts_per_page' => $a['num_posts'], 
+				'orderby' => 'rand', 
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'endo_wrc_group',
+						'field' => 'id',
+						'terms' => $a['group_id']
+					)
+				)
+			) );
+
+		} else {
+
+			// filter through all entries
+			$my_query = new WP_Query( array( 
+				'post_type' => 'endo_wrc_cpt', 
+				'posts_per_page' => $a['num_posts'], 
+				'orderby' => 'rand'
+			) );
+		}
+
+		if ( $my_query->have_posts() ) {
+
+			$content = "";
+
+			while ( $my_query->have_posts() ) : $my_query->the_post();
+				
+				$content .= apply_filters('the_content', get_the_content() );
 					
 			endwhile;
 
