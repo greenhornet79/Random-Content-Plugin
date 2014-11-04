@@ -121,7 +121,7 @@ class Endo_Random_Content {
 
 
 	/**
-	* Add extra columns to the random content custom post type
+	* Adds extra column for the ID to the group custom taxonomy
 	*
 	* @since 1.0
 	*/
@@ -131,7 +131,7 @@ class Endo_Random_Content {
 	}
 
 	/**
-	* Add extra columns to the random content custom post type
+	* Adds the group ID to the custom column
 	*
 	* @since 1.0
 	*/
@@ -214,7 +214,7 @@ class Endo_Random_Content {
 	/**
 	* Defines new random content shortcode
 	*
-	* @since 0.3.0
+	* @since 1.0
 	*/
 	public function new_shortcode( $atts ) {
 		$a = shortcode_atts( array(
