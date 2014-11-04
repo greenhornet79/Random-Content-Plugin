@@ -27,8 +27,10 @@ class Endo_WRC_Widget extends WP_Widget {
 		if ( !empty( $title) )
 			echo $before_title . $title . $after_title;
 
+
 		// if $group is set, then filter results by $group
-		if ( $group ) {
+		if ( !empty( $group ) ) {
+
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
 				'posts_per_page' => 1, 
@@ -41,8 +43,8 @@ class Endo_WRC_Widget extends WP_Widget {
 					)
 				)
 			) );
-		}
-		else {
+		} else {
+
 			// filter through all entries
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
@@ -52,7 +54,7 @@ class Endo_WRC_Widget extends WP_Widget {
 		}
 
 		while ( $my_query->have_posts() ) : $my_query->the_post();
-			
+
 			the_content();
 				
 		endwhile;
@@ -102,13 +104,14 @@ class Endo_WRC_Widget extends WP_Widget {
 			);
 			$terms = get_terms( 'endo_wrc_group', $args );
 
-
 			$count = count($terms);
+
 			if ( $count > 0 ){
 
 				echo '<p>';
 				echo '<label for="' . $this->get_field_id( 'group' ) . '">Group: </label>';
 				echo '<select class="widefat" name="' . $field_name . '" id="' . $field_id . '">';
+				echo "<option value='' " . selected ( '', '' ) . "> - </option>";
 				foreach ( $terms as $term ) {
 					echo "<option value='$term' " . selected( $group, $term ) . ">" . $term . "</option>";
 				}
@@ -119,14 +122,6 @@ class Endo_WRC_Widget extends WP_Widget {
 				echo '<p>Create a group to organize multiple widgets.</p>';
 			}
 
-		?>
-			
-		
-		
-		
-		
-		
-		<?php
 	}
 
 }  // end class
