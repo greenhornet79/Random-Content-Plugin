@@ -1,8 +1,5 @@
 <?php 
 
-/*  ==========  Widgetizing the display of Random Content ============= */ 
-
-
 class Endo_WRC_Widget extends WP_Widget {
 	
 	function __construct()
@@ -26,7 +23,6 @@ class Endo_WRC_Widget extends WP_Widget {
 
 		if ( !empty( $title) )
 			echo $before_title . $title . $after_title;
-
 
 		// if $group is set, then filter results by $group
 		if ( !empty( $group ) ) {
@@ -91,9 +87,7 @@ class Endo_WRC_Widget extends WP_Widget {
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>"
 				value="<?php echo $title; ?>" />
 		</p>
-		
-		
-			
+
 		<?php
 	
 			$field_id = $this->get_field_id( 'group' );
