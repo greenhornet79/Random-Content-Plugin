@@ -51,9 +51,9 @@ class Endo_Random_Content {
 
 		add_action( 'widgets_init' , array( $this, 'register_endo_wrc_widget' ) );
 
-		add_filter( 'manage_endo_wrc_cpt_posts_columns', array( $this, 'add_random_content_columns' ) );
+		add_filter( 'manage_edit-endo_wrc_group_columns', array( $this, 'add_random_content_group_columns' ) );
 
-		add_action( 'manage_endo_wrc_cpt_posts_custom_column', array( $this, 'random_content_custom_columns' ), 10, 2 );
+		add_filter( 'manage_endo_wrc_group_custom_column', array( $this, 'random_content_group_custom_columns' ), 10, 3 );
 
 	}
 
@@ -113,7 +113,8 @@ class Endo_Random_Content {
 			'endo_wrc_cpt',
 			array(
 				'label' => __( 'Group' ),
-				'hierarchical' => true
+				'hierarchical' => true,
+				'show_admin_column' => true
 			)
 		);
 	}
@@ -124,9 +125,9 @@ class Endo_Random_Content {
 	*
 	* @since 1.0
 	*/
-	public function add_random_content_columns( $columns ) {
+	public function add_random_content_group_columns( $columns ) {
 
-		return array_merge( $columns, array( 'group' => 'Group' ) );
+		return array_merge( $columns, array( 'group_id' => 'ID' ) );
 	}
 
 	/**
@@ -134,29 +135,21 @@ class Endo_Random_Content {
 	*
 	* @since 1.0
 	*/
-	public function random_content_custom_columns( $column, $post_id ) {
+	public function random_content_group_custom_columns( $value, $column_name, $id ) {
 
-		switch( $column ) {
+		switch( $column_name ) {
 
-			case 'group' :
-
-			$terms = get_the_terms( $post_id, 'endo_wrc_group' );
+			case 'group_id' :
 			
-			if ( $terms && ! is_wp_error( $terms ) ) {
+				$out = $id;
 
-				$groups = array();
+				break;
 
-				foreach ( $terms as $term ) {
-					$groups[] = $term->name;
-				}
-
-				$all_groups = join( ", ", $groups );
-			}
-
-			echo $all_groups;
-			
-			break;
+			default: 
+				break;
 		}
+
+		return $out;
 
 	}
 
