@@ -29,7 +29,7 @@ class Endo_WRC_Widget extends WP_Widget {
 
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => 1, 
+				'posts_per_page' => $num_posts, 
 				'orderby' => 'rand', 
 				'tax_query' => array(
 					array(
@@ -44,7 +44,7 @@ class Endo_WRC_Widget extends WP_Widget {
 			// filter through all entries
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => 1, 
+				'posts_per_page' => $num_posts, 
 				'orderby' => 'rand'
 			) );
 		}
@@ -65,6 +65,7 @@ class Endo_WRC_Widget extends WP_Widget {
 		$instance = array();
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['group'] = strip_tags( $new_instance['group'] );
+		$instance['num_posts'] = strip_tags( $new_instance['num_posts'] );
 		return $instance;
 	}
 	
@@ -78,6 +79,12 @@ class Endo_WRC_Widget extends WP_Widget {
 		}
 		if ( isset( $instance[ 'group' ] ) ) {
 			$group = $instance[ 'group'];
+		}
+
+		if ( isset( $instance[ 'num_posts' ] ) ) {
+			$num_posts = $instance[ 'num_posts'];
+		} else {
+			$num_posts = 1;
 		}
 
 		?>
@@ -115,6 +122,14 @@ class Endo_WRC_Widget extends WP_Widget {
 			else {
 				echo '<p>Create a group to organize multiple widgets.</p>';
 			}
+
+			echo '<p>';
+			echo '<label for="' . $this->get_field_id( 'num_posts' ) . '">Number of Posts to Show at Once: </label>';
+
+			echo '<input type="text" id=" ' . $this->get_field_id( 'num_posts' ) . '" name="' . $this->get_field_name( 'num_posts' ) . '"
+				value="' . $num_posts . '" />';
+			echo '</p>';
+
 
 	}
 
