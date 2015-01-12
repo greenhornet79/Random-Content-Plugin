@@ -29,7 +29,7 @@ class Endo_Random_Content {
 	public function __construct() {
 
 		$this->name = 'random-content';
-		$this->version = '1.0';
+		$this->version = '1.1';
 
 	}
 
