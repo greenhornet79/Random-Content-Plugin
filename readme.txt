@@ -4,7 +4,7 @@ Donate link: http://www.endocreative.com
 Tags: content, widget, random, shortcode, text, images
 Requires at least: 3.0.1
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ In the shortcode, use the num_posts parameter. In the widget, enter a number in 
 1. Adding the widget to a sidebar.
 
 == Changelog ==
+
+= 1.1 =
+* Add num_posts parameter to old version of shortcode for backwards compatibility
 
 = 1.0 = 
 * Update shortcode to [random_content] to help prevent conflicts with other plugins

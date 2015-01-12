@@ -170,7 +170,7 @@ class Endo_Random_Content {
 
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => 2, 
+				'posts_per_page' => $a['num_posts'], 
 				'orderby' => 'rand', 
 				'tax_query' => array(
 					array(
@@ -186,7 +186,7 @@ class Endo_Random_Content {
 			// filter through all entries
 			$my_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => 2, 
+				'posts_per_page' => $a['num_posts'], 
 				'orderby' => 'rand'
 			) );
 		}
