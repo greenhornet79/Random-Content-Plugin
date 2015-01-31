@@ -29,7 +29,7 @@ class Endo_Random_Content {
 	public function __construct() {
 
 		$this->name = 'random-content';
-		$this->version = '1.1';
+		$this->version = '1.2';
 
 	}
 
@@ -44,7 +44,7 @@ class Endo_Random_Content {
 
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
 
-		add_action( 'init', array( $this, 'localize' ) );
+		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
 		// this shortcode name (random) has been deprecated due to conflicts with other plugins
 		add_shortcode( 'random', array( &$this, 'shortcode') );
@@ -65,9 +65,9 @@ class Endo_Random_Content {
 	*
 	* @since 1.2
 	*/
-	public function localize() {
+	public function plugin_textdomain() {
 
-		load_plugin_textdomain('random-content', false, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain('random-content', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		
 	} 
 
