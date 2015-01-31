@@ -58,6 +58,9 @@ In the shortcode, use the num_posts parameter. In the widget, enter a number in 
 
 == Changelog ==
 
+= 1.2 =
+* Add localization files for translation support
+
 = 1.1 =
 * Add num_posts parameter to old version of shortcode for backwards compatibility
 
