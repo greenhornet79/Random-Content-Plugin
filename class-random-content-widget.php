@@ -5,8 +5,8 @@ class Endo_WRC_Widget extends WP_Widget {
 	function __construct()
 	{
 		$options = array(
-			'description'	=> 'Display random content from the selected group',
-			'name' 			=> 'Random Content'
+			'description'	=> __('Display random content from the selected group', 'random-content'),
+			'name' 			=> __('Random Content', 'random-content')
 		);
 		
 		parent::__construct('endo_wrc_widget', 'WRC_Widget', $options);
@@ -75,7 +75,7 @@ class Endo_WRC_Widget extends WP_Widget {
 			$title = $instance[ 'title' ];
 		} 
 		else {
-			$title = 'New title';
+			$title = '';
 		}
 		if ( isset( $instance[ 'group' ] ) ) {
 			$group = $instance[ 'group'];
@@ -90,7 +90,7 @@ class Endo_WRC_Widget extends WP_Widget {
 		?>
 		
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title: </label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'random-content'); ?> </label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>"
 				value="<?php echo $title; ?>" />
 		</p>
@@ -110,7 +110,7 @@ class Endo_WRC_Widget extends WP_Widget {
 			if ( $count > 0 ){
 
 				echo '<p>';
-				echo '<label for="' . $this->get_field_id( 'group' ) . '">Group: </label>';
+				echo '<label for="' . $this->get_field_id( 'group' ) . '">' . __('Group:', 'random-content') . '</label>';
 				echo '<select class="widefat" name="' . $field_name . '" id="' . $field_id . '">';
 				echo "<option value='' " . selected ( '', '' ) . "> - </option>";
 				foreach ( $terms as $term ) {
@@ -120,11 +120,11 @@ class Endo_WRC_Widget extends WP_Widget {
 				echo '</p>';
 			} 
 			else {
-				echo '<p>Create a group to organize multiple widgets.</p>';
+				echo '<p>' . __('Create a group to organize multiple widgets.', 'random-content') . '</p>';
 			}
 
 			echo '<p>';
-			echo '<label for="' . $this->get_field_id( 'num_posts' ) . '">Number of Posts to Show at Once: </label>';
+			echo '<label for="' . $this->get_field_id( 'num_posts' ) . '">' . __('Number of Posts to Show at Once:', 'random-content') . '</label>';
 
 			echo '<input type="text" id=" ' . $this->get_field_id( 'num_posts' ) . '" name="' . $this->get_field_name( 'num_posts' ) . '"
 				value="' . $num_posts . '" />';

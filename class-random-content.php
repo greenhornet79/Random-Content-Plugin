@@ -44,6 +44,8 @@ class Endo_Random_Content {
 
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
 
+		add_action( 'init', array( $this, 'localize' ) );
+
 		// this shortcode name (random) has been deprecated due to conflicts with other plugins
 		add_shortcode( 'random', array( &$this, 'shortcode') );
 
@@ -56,6 +58,18 @@ class Endo_Random_Content {
 		add_filter( 'manage_endo_wrc_group_custom_column', array( $this, 'random_content_group_custom_columns' ), 10, 3 );
 
 	}
+	
+
+	/**
+	* Loads the localization files for translation
+	*
+	* @since 1.2
+	*/
+	public function localize() {
+
+		load_plugin_textdomain('random-content', false, basename( dirname( __FILE__ ) ) . '/languages' );
+		
+	} 
 
 	/**
 	* Calls the widget class that extends WP_Widget
@@ -80,16 +94,16 @@ class Endo_Random_Content {
 
 		$args = array(
 			'labels' => array(
-				'name' => 'Random Content',
-				'singular_name' => 'Random Content',
-				'add_new' => 'Add New',
-				'add_new_item' => 'Add New Random Content',
-				'edit_item' => 'Edit Random Content',
-				'new_item' => 'Add New Random Content',
-				'view_item' => 'View Random Content',
-				'search_items' => 'Search',
-				'not_found' => 'No Random Content Found',
-				'not_found_in_trash' => 'No Random Content Found in Trash'
+				'name' => __('Random Content', 'random-content'),
+				'singular_name' => __('Random Content', 'random-content'),
+				'add_new' => __('Add New', 'random-content'),
+				'add_new_item' => __('Add New Random Content', 'random-content'),
+				'edit_item' => __('Edit Random Content', 'random-content'),
+				'new_item' => __('Add New Random Content', 'random-content'),
+				'view_item' => __('View Random Content', 'random-content'),
+				'search_items' => __('Search', 'random-content'),
+				'not_found' => __('No Random Content Found', 'random-content'),
+				'not_found_in_trash' => __('No Random Content Found in Trash', 'random-content')
 			),
 			'show_ui' => true,
 			'supports' => array(
@@ -112,7 +126,7 @@ class Endo_Random_Content {
 			'endo_wrc_group',
 			'endo_wrc_cpt',
 			array(
-				'label' => __( 'Group' ),
+				'label' => __( 'Group', 'random-content' ),
 				'hierarchical' => true,
 				'show_admin_column' => true
 			)
@@ -202,7 +216,7 @@ class Endo_Random_Content {
 			endwhile;
 
 		} else {
-			$content = 'No posts found.';
+			$content = __('No posts found.', 'random-content');
 		}
 
 		wp_reset_postdata();
@@ -259,7 +273,7 @@ class Endo_Random_Content {
 			endwhile;
 
 		} else {
-			$content = 'No posts found.';
+			$content = __('No posts found.', 'random-content');
 		}
 
 		wp_reset_postdata();
