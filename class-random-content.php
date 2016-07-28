@@ -231,10 +231,13 @@ class Endo_Random_Content {
 	* @since 1.0
 	*/
 	public function new_shortcode( $atts ) {
+		
 		$a = shortcode_atts( array(
 			'group_id' => '',
 			'num_posts' => 1,
 		), $atts );
+
+		$content = "";
 
 		// if $group_id is set, then filter results by $group_id
 		if ( !empty( $a['group_id'] ) ) {
@@ -264,11 +267,9 @@ class Endo_Random_Content {
 
 		if ( $my_query->have_posts() ) {
 
-			$content = "";
-
 			while ( $my_query->have_posts() ) : $my_query->the_post();
 				
-				$content .= apply_filters('the_content', get_the_content() );
+				$content = apply_filters('the_content', get_the_content() );
 					
 			endwhile;
 
@@ -278,7 +279,7 @@ class Endo_Random_Content {
 
 		wp_reset_postdata();
 
-		return $content;
+		return apply_filters( 'rc_content', $content );
 		
 	}
 
