@@ -29,7 +29,7 @@ class Endo_Random_Content {
 	public function __construct() {
 
 		$this->name = 'random-content';
-		$this->version = '1.2';
+		$this->version = '1.3';
 
 	}
 
@@ -154,16 +154,14 @@ class Endo_Random_Content {
 		switch( $column_name ) {
 
 			case 'group_id' :
-			
-				$out = $id;
-
+				$value = $id;
 				break;
-
 			default: 
 				break;
+				
 		}
 
-		return $out;
+		return $value;
 
 	}
 
