@@ -51,8 +51,9 @@ class Endo_WRC_Widget extends WP_Widget {
 
 		while ( $my_query->have_posts() ) : $my_query->the_post();
 
-			$content = apply_filters('the_content', get_the_content() );
-			echo apply_filters( 'rc_content', $content ); 
+			$content = get_the_content();
+			$thecontent = apply_filters( 'the_content', $content );
+			echo apply_filters( 'rc_content', $thecontent ); 
 				
 		endwhile;
 
