@@ -57,10 +57,12 @@ In the shortcode, use the num_posts parameter. In the widget, enter a number in 
 
 ## Changelog
 
+### 1.3.1
+* Fix shortcode output so that multiple posts will display
+
 ### 1.3
 * Add rc_content filter for extending the plugin output in both the shortcode and the widget
 * Add content filter to widget output to allow for oembed support
-
 
 ### 1.2
 * Add localization files for translation support
