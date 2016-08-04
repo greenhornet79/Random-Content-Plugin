@@ -267,12 +267,12 @@ class Endo_Random_Content {
 
 			while ( $my_query->have_posts() ) : $my_query->the_post();
 				
-				$content = apply_filters('the_content', get_the_content() );
+				$content .= apply_filters('the_content', get_the_content() );
 					
 			endwhile;
 
 		} else {
-			$content = __('No posts found.', 'random-content');
+			$content .= __('No posts found.', 'random-content');
 		}
 
 		wp_reset_postdata();
