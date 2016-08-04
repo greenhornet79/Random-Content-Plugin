@@ -4,7 +4,7 @@ Donate link: http://www.endocreative.com
 Tags: content, widget, random, shortcode, text, images, testimonials, faq
 Requires at least: 3.0.1
 Tested up to: 4.5.3
-Stable tag: 1.2
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ In the shortcode, use the num_posts parameter. In the widget, enter a number in 
 1. Adding the widget to a sidebar.
 
 == Changelog ==
+
+= 1.3.1 =
+* Fix shortcode output so that multiple posts will display
 
 = 1.3 =
 * Add rc_content filter for extending the plugin output in both the shortcode and the widget
