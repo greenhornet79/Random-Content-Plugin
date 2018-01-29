@@ -1,1 +1,4 @@
 deploy.sh
+assets/.DS_Store
+languages/.DS_Store
+.DS_Store

@@ -240,7 +240,7 @@ class Endo_Random_Content {
 		// if $group_id is set, then filter results by $group_id
 		if ( !empty( $a['group_id'] ) ) {
 
-			$my_query = new WP_Query( array( 
+			$random_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
 				'posts_per_page' => $a['num_posts'], 
 				'orderby' => 'rand', 
@@ -256,16 +256,16 @@ class Endo_Random_Content {
 		} else {
 
 			// filter through all entries
-			$my_query = new WP_Query( array( 
+			$random_query = new WP_Query( array( 
 				'post_type' => 'endo_wrc_cpt', 
 				'posts_per_page' => $a['num_posts'], 
 				'orderby' => 'rand'
 			) );
 		}
 
-		if ( $my_query->have_posts() ) {
+		if ( $random_query->have_posts() ) {
 
-			while ( $my_query->have_posts() ) : $my_query->the_post();
+			while ( $random_query->have_posts() ) : $random_query->the_post();
 				
 				$content .= apply_filters('the_content', get_the_content() );
 					
