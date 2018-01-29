@@ -44,6 +44,7 @@ class Endo_WRC_Widget extends WP_Widget {
 
 		} 
 
+		/* 
 		$random_query = new WP_Query( $args );
 
 		if ( $random_query->have_posts() ) {
@@ -57,6 +58,7 @@ class Endo_WRC_Widget extends WP_Widget {
 		}
 
 		wp_reset_postdata();
+		*/
 						
 		echo $after_widget;
 
