@@ -25,7 +25,7 @@ class Endo_WRC_Widget extends WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 
-		$args = array( 
+		$ranomd_args = array( 
 			'post_type' => 'endo_wrc_cpt', 
 			'posts_per_page' => $num_posts, 
 			'orderby' => 'rand'
@@ -34,7 +34,7 @@ class Endo_WRC_Widget extends WP_Widget {
 		// if $group is set, then filter results by $group
 		if ( !empty( $group ) ) {
 
-			$args['tax_query'] = array(
+			$random_args['tax_query'] = array(
 				array(
 					'taxonomy' => 'endo_wrc_group',
 					'field' => 'slug',
@@ -44,7 +44,7 @@ class Endo_WRC_Widget extends WP_Widget {
 
 		} 
 
-		$random_query = new WP_Query( $args );
+		$random_query = new WP_Query( $random_args );
 
 		if ( $random_query->have_posts() ) {
 
