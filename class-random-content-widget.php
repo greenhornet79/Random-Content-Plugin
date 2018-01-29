@@ -21,41 +21,40 @@ class Endo_WRC_Widget extends WP_Widget {
 		
 		echo $before_widget;
 
-		if ( !empty( $title) )
+		if ( !empty( $title) ) {
 			echo $before_title . $title . $after_title;
+		}
+
+		$args = array( 
+			'post_type' => 'endo_wrc_cpt', 
+			'posts_per_page' => $num_posts, 
+			'orderby' => 'rand'
+		);
 
 		// if $group is set, then filter results by $group
 		if ( !empty( $group ) ) {
 
-			$my_query = new WP_Query( array( 
-				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => $num_posts, 
-				'orderby' => 'rand', 
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'endo_wrc_group',
-						'field' => 'slug',
-						'terms' => $group
-					)
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'endo_wrc_group',
+					'field' => 'slug',
+					'terms' => $group
 				)
-			) );
-		} else {
+			);
 
-			// filter through all entries
-			$my_query = new WP_Query( array( 
-				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => $num_posts, 
-				'orderby' => 'rand'
-			) );
+		} 
+
+		$random_query = new WP_Query( $args );
+
+		if ( $random_query->have_posts() ) {
+
+			while ( $random_query->have_posts() ) : $random_query->the_post();
+
+				the_content();
+					
+			endwhile;
+
 		}
-
-		while ( $my_query->have_posts() ) : $my_query->the_post();
-
-			$content = get_the_content();
-			$thecontent = apply_filters( 'the_content', $content );
-			echo apply_filters( 'rc_content', $thecontent ); 
-				
-		endwhile;
 
 		wp_reset_postdata();
 						
