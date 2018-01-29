@@ -25,7 +25,7 @@ class Endo_WRC_Widget extends WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 
-		$ranomd_args = array( 
+		$random_args = array( 
 			'post_type' => 'endo_wrc_cpt', 
 			'posts_per_page' => $num_posts, 
 			'orderby' => 'rand'
