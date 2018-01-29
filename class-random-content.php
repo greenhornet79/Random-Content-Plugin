@@ -235,47 +235,45 @@ class Endo_Random_Content {
 			'num_posts' => 1,
 		), $atts );
 
-		$content = "";
+		$args = array( 
+			'post_type' => 'endo_wrc_cpt', 
+			'posts_per_page' => $a['num_posts'], 
+			'orderby' => 'rand'
+		);
 
 		// if $group_id is set, then filter results by $group_id
 		if ( !empty( $a['group_id'] ) ) {
 
-			$random_query = new WP_Query( array( 
-				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => $a['num_posts'], 
-				'orderby' => 'rand', 
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'endo_wrc_group',
-						'field' => 'id',
-						'terms' => $a['group_id']
-					)
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'endo_wrc_group',
+					'field' => 'id',
+					'terms' => $a['group_id']
 				)
-			) );
+			);
 
-		} else {
+		} 
 
-			// filter through all entries
-			$random_query = new WP_Query( array( 
-				'post_type' => 'endo_wrc_cpt', 
-				'posts_per_page' => $a['num_posts'], 
-				'orderby' => 'rand'
-			) );
-		}
+		$random_query = new WP_Query( $args );
+
+		ob_start(); 
 
 		if ( $random_query->have_posts() ) {
 
 			while ( $random_query->have_posts() ) : $random_query->the_post();
 				
-				$content .= apply_filters('the_content', get_the_content() );
+				the_content();
 					
 			endwhile;
 
 		} else {
-			$content .= __('No posts found.', 'random-content');
+			_e('No posts found.', 'random-content');
 		}
 
 		wp_reset_postdata();
+
+		$content = ob_get_contents();
+		ob_end_clean();
 
 		return apply_filters( 'rc_content', $content );
 		
