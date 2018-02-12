@@ -1,14 +1,14 @@
-<?php 
+<?php
 
 class Endo_WRC_Widget extends WP_Widget {
-	
+
 	function __construct()
 	{
 		$options = array(
-			'description'	=> __('Display random content from the selected group', 'random-content'),
-			'name' 			=> __('Random Content', 'random-content')
+			'description' => __('Display random content from the selected group', 'random-content'),
+			'name'        => __('Random Content', 'random-content')
 		);
-		
+
 		parent::__construct('endo_wrc_widget', 'WRC_Widget', $options);
 	}
 
@@ -16,19 +16,19 @@ class Endo_WRC_Widget extends WP_Widget {
 
 		extract($args);
 		extract($instance);
-		
+
 		$title = apply_filters('widget_title', $title);
-		
+
 		echo $before_widget;
 
 		if ( !empty( $title) ) {
 			echo $before_title . $title . $after_title;
 		}
 
-		$random_args = array( 
-			'post_type' => 'endo_wrc_cpt', 
-			'posts_per_page' => $num_posts, 
-			'orderby' => 'rand'
+		$random_args = array(
+			'post_type'      => 'endo_wrc_cpt',
+			'posts_per_page' => $num_posts,
+			'orderby'        => 'rand'
 		);
 
 		// if $group is set, then filter results by $group
@@ -37,29 +37,19 @@ class Endo_WRC_Widget extends WP_Widget {
 			$random_args['tax_query'] = array(
 				array(
 					'taxonomy' => 'endo_wrc_group',
-					'field' => 'slug',
-					'terms' => $group
+					'field'    => 'slug',
+					'terms'    => $group
 				)
 			);
 
-		} 
-
-		$random_query = new WP_Query( $random_args );
-
-		if ( $random_query->have_posts() ) {
-
-			while ( $random_query->have_posts() ) : $random_query->the_post();
-
-				the_content();
-					
-			endwhile;
-
-			wp_reset_postdata();
-
 		}
 
-		
-						
+		$random_posts = get_posts( $random_args );
+
+		foreach ( $random_posts as $random_post ) {
+			echo wpautop( $random_post->post_content );
+		}
+
 		echo $after_widget;
 
 	}
@@ -71,12 +61,12 @@ class Endo_WRC_Widget extends WP_Widget {
 		$instance['num_posts'] = strip_tags( $new_instance['num_posts'] );
 		return $instance;
 	}
-	
+
 	public function form( $instance ) {
 
 		if ( isset( $instance[ 'title' ] ) ) {
 			$title = $instance[ 'title' ];
-		} 
+		}
 		else {
 			$title = '';
 		}
@@ -91,7 +81,7 @@ class Endo_WRC_Widget extends WP_Widget {
 		}
 
 		?>
-		
+
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'random-content'); ?> </label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>"
@@ -99,10 +89,10 @@ class Endo_WRC_Widget extends WP_Widget {
 		</p>
 
 		<?php
-	
+
 			$field_id = $this->get_field_id( 'group' );
 			$field_name = $this->get_field_name( 'group' );
-			
+
 			$args = array(
 				'fields' => 'names'
 			);
@@ -121,7 +111,7 @@ class Endo_WRC_Widget extends WP_Widget {
 				}
 				echo "</select>";
 				echo '</p>';
-			} 
+			}
 			else {
 				echo '<p>' . __('Create a group to organize multiple widgets.', 'random-content') . '</p>';
 			}
